@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\Role;
+use App\Models\TaskStatus;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class RoleSeeder extends Seeder
+class TaskStatusSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Role::factory()->create(['name' => 'Admin']);
-        Role::factory()->create(['name' => 'User']);
+        TaskStatus::create(['title' => 'Due']);
+        TaskStatus::create(['title' => 'Complete']);
     }
 }

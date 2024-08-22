@@ -2,18 +2,19 @@
 
 namespace Database\Seeders;
 
-use App\Models\Role;
+use App\Models\Priority;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class RoleSeeder extends Seeder
+class PrioritySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Role::factory()->create(['name' => 'Admin']);
-        Role::factory()->create(['name' => 'User']);
+        Priority::create(['title' => 'Low']);
+        Priority::create(['title' => 'Medium']);
+        Priority::create(['title' => 'High']);
     }
 }
