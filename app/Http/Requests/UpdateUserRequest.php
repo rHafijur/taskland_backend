@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePriorityRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user()->role_id == 1;
     }
 
     /**
@@ -22,7 +22,10 @@ class StorePriorityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'role_id' => 'required|integer|exists:roles,id',
+            'name' => 'required|string|max:255',
+            'email' => "required|email|unique:users,email,$this->id,id",
+            'password' => 'required|confirmed|min:8'
         ];
     }
 }
