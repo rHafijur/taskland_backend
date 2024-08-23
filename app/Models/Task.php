@@ -19,7 +19,8 @@ class Task extends Model
         'description',
         'due_date',
         'priority_id',
-        'status_id',
+        'task_status_id',
+        'completed_at',
         'created_by',
     ];
 
@@ -28,7 +29,7 @@ class Task extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user(): BelongsTo
+    public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by', 'id');
     }

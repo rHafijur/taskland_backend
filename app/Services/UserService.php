@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Hash;
 use App\Repositories\UserRepositoryInterface;
 
 class UserService
@@ -13,11 +14,15 @@ class UserService
 
     public function create(array $data)
     {
+        $data['password'] = Hash::make($data['password']);
         return $this->userRepository->create($data);
     }
 
     public function update(array $data, $id)
     {
+        if(isset($data['password']) && $data['password'] != null) {
+            $data['password'] = Hash::make($data['password']);
+        }
         return $this->userRepository->update($data, $id);
     }
 

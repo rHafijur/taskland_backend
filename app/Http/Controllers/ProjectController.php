@@ -3,17 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Services\ProjectService;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 
 class ProjectController extends Controller
 {
+    public function __construct(
+        protected ProjectService $projectService
+    ) {
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return [
+            "data" => $this->projectService->all()
+        ];
     }
 
     /**
@@ -29,7 +37,11 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        //
+        $data = $request->only(['title']);
+        $data['created_by'] = auth()->id();
+        return [
+            "data" => $this->projectService->create($data)
+        ];
     }
 
     /**
@@ -51,16 +63,20 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProjectRequest $request, Project $project)
+    public function update(UpdateProjectRequest $request, $id)
     {
-        //
+        return [
+            "data" => $this->projectService->update($request->only(['title']), $id)
+        ];
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Project $project)
+    public function destroy($id)
     {
-        //
+        return [
+            "data" => $this->projectService->delete($id)
+        ];
     }
 }

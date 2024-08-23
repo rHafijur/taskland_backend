@@ -13,7 +13,9 @@ class PriorityController extends Controller
      */
     public function index()
     {
-        //
+        return [
+            'data' => Priority::all()
+        ];
     }
 
     /**

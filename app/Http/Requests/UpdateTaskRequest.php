@@ -27,7 +27,6 @@ class UpdateTaskRequest extends FormRequest
             'description' => 'required|string',
             'due_date' => 'required|date',
             'priority_id' => 'required|exists:priorities,id',
-            'task_status_id' => 'required|exists:task_statueses,id'
         ];
     }
 }

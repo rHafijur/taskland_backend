@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use App\Repositories\TaskRepositoryInterface;
 
 class TaskService
@@ -13,11 +14,14 @@ class TaskService
 
     public function create(array $data)
     {
+        $data['task_status_id'] = 1;
+        $data['due_date'] = Carbon::parse($data['due_date'])->format('Y-m-d');
         return $this->taskRepository->create($data);
     }
 
     public function update(array $data, $id)
     {
+        $data['due_date'] = Carbon::parse($data['due_date'])->format('Y-m-d H:i:s');
         return $this->taskRepository->update($data, $id);
     }
 

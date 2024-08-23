@@ -13,7 +13,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        return [
+            'data' => Role::all()
+        ];
     }
 
     /**

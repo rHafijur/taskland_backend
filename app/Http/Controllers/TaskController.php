@@ -3,17 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Services\TaskService;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 
 class TaskController extends Controller
 {
+    public function __construct(
+        protected TaskService $taskService
+    ) {
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return [
+            'data' => $this->taskService->all()
+        ];
     }
 
     /**
@@ -29,7 +37,11 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        //
+        $data = $request->all();
+        $data['created_by'] = auth()->id();
+        return [
+            'data' => $this->taskService->create($data)
+        ];
     }
 
     /**
@@ -51,16 +63,20 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTaskRequest $request, Task $task)
+    public function update(UpdateTaskRequest $request, $id)
     {
-        //
+        return [
+            'data' => $this->taskService->update($request->except(['created_by']), $id)
+        ];
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function destroy($id)
     {
-        //
+        return [
+            'data' => $this->taskService->delete($id)
+        ];
     }
 }
