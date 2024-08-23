@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use Carbon\Carbon;
+use App\Events\TaskUpdated;
+use App\Events\TaskCompleted;
 use App\Repositories\TaskRepositoryInterface;
 
 class TaskService
@@ -16,13 +18,23 @@ class TaskService
     {
         $data['task_status_id'] = 1;
         $data['due_date'] = Carbon::parse($data['due_date'])->format('Y-m-d');
-        return $this->taskRepository->create($data);
+        $task = $this->taskRepository->create($data);
+        try {
+            TaskUpdated::dispatch($task['id']);
+        } catch(\Throwable $t) {
+        }
+        return $task;
     }
 
     public function update(array $data, $id)
     {
         $data['due_date'] = Carbon::parse($data['due_date'])->format('Y-m-d H:i:s');
-        return $this->taskRepository->update($data, $id);
+        $task = $this->taskRepository->update($data, $id);
+        try {
+            TaskUpdated::dispatch($task['id']);
+        } catch(\Throwable $t) {
+        }
+        return $task;
     }
 
     public function delete($id)
@@ -42,6 +54,11 @@ class TaskService
 
     public function complete($id)
     {
-        return $this->taskRepository->complete($id);
+        $task = $this->taskRepository->complete($id);
+        try {
+            TaskCompleted::dispatch($id);
+        } catch(\Throwable $t) {
+        }
+        return $task;
     }
 }
