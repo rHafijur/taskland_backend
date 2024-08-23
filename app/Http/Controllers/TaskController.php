@@ -6,6 +6,7 @@ use App\Models\Task;
 use App\Services\TaskService;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Http\Requests\CompleteTaskRequest;
 
 class TaskController extends Controller
 {
@@ -77,6 +78,13 @@ class TaskController extends Controller
     {
         return [
             'data' => $this->taskService->delete($id)
+        ];
+    }
+
+    public function complete(CompleteTaskRequest $request)
+    {
+        return [
+            'data' => $this->taskService->complete($request->id)
         ];
     }
 }

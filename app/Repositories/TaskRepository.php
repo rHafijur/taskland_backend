@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use Carbon\Carbon;
 use App\Models\Task;
 
 class TaskRepository implements TaskRepositoryInterface
@@ -24,9 +25,16 @@ class TaskRepository implements TaskRepositoryInterface
         ];
     }
 
+    // public function all()
+    // {
+    //     return Task::all()->map(function ($task) {
+    //         return $this->mapper($task);
+    //     });
+    // }
+
     public function all()
     {
-        return Task::all()->map(function ($task) {
+        return Task::where('created_by', auth()->id())->get()->map(function ($task) {
             return $this->mapper($task);
         });
     }
@@ -52,5 +60,14 @@ class TaskRepository implements TaskRepositoryInterface
     public function find($id)
     {
         return Task::findOrFail($id);
+    }
+
+    public function complete($id)
+    {
+        $task = Task::findOrFail($id);
+        $task->completed_at = Carbon::now();
+        $task->task_status_id = 2;
+        $task->save();
+        return $this->mapper($task);
     }
 }

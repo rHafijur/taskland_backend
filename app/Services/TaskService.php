@@ -39,4 +39,9 @@ class TaskService
     {
         return $this->taskRepository->find($id);
     }
+
+    public function complete($id)
+    {
+        return $this->taskRepository->complete($id);
+    }
 }

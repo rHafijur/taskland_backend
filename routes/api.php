@@ -21,6 +21,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('user', UserController::class);
     Route::resource('project', ProjectController::class);
     Route::resource('task', TaskController::class);
+    Route::post('task/complete', [TaskController::class, 'complete']);
 });
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
