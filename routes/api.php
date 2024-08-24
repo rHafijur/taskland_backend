@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -24,6 +25,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('task', TaskController::class);
     Route::post('task/complete', [TaskController::class, 'complete']);
     Route::get('dashboard', [DashboardController::class, 'index']);
+    Route::get('menu', [MenuController::class, 'index']);
 });
 // Route::get('/user', function (Request $request) {
 //     return $request->user();

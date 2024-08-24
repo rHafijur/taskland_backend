@@ -19,7 +19,7 @@ class DashboardService
         if(auth()->user()->role_id == 1) {
             return $this->taskRepository->all();
         }
-        return $this->taskRepository->all(filters: new CreatedByFilter(auth()->id()));
+        return $this->taskRepository->all(filters: [new CreatedByFilter(auth()->id())]);
     }
 
     public function allTasks()
