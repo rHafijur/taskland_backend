@@ -21,7 +21,7 @@ class TaskRepository implements TaskRepositoryInterface
             'priority_id' => $task->priority->id,
             'task_status' => $task->status->title,
             'task_status_id' => $task->status->id,
-            'completed_at' => Carbon::parse($task->completed_at)->timezone('Asia/Dhaka'),
+            'completed_at' => $task->completed_at == null ? null : Carbon::parse($task->completed_at)->timezone('Asia/Dhaka'),
             'creator_name' => $task->createdBy->name
         ];
     }
