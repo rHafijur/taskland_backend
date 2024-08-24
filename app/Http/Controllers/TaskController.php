@@ -67,7 +67,7 @@ class TaskController extends Controller
     public function update(UpdateTaskRequest $request, $id)
     {
         return [
-            'data' => $this->taskService->update($request->except(['created_by','completed_at','task_status_id']), $id)
+            'data' => $this->taskService->update($request->except(['created_by','completed_at','task_status_id','due_date']), $id)
         ];
     }
 

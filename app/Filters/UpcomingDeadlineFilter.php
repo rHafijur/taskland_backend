@@ -12,6 +12,6 @@ class UpcomingDeadlineFilter implements FilterInterface
 
     public function apply($query)
     {
-        return $query->whereNull('completed_at')->where('due_date', '<', $this->datetime);
+        return $query->whereNull('completed_at')->whereDate('due_date', $this->datetime);
     }
 }

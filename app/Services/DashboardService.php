@@ -29,7 +29,7 @@ class DashboardService
 
     private function dueToday()
     {
-        $filters[] = new UpcomingDeadlineFilter(Carbon::now()->addDay());
+        $filters[] = new UpcomingDeadlineFilter(Carbon::now());
         if(auth()->user()->role_id != 1) {
             $filters[] = new CreatedByFilter(auth()->id());
         }
@@ -44,13 +44,13 @@ class DashboardService
             $filters[] = new CreatedByFilter(auth()->id());
         }
         $tasks = $this->taskRepository->all(additionalQuery: function ($q) {
-            return $q->where('due_date', '>=', Carbon::now()->format("Y-m-d"))->whereNull('completed_at')->orderBy('due_date', 'asc');
+            return $q->where('due_date', '>=', Carbon::now())->whereNull('completed_at')->orderBy('due_date', 'asc');
         }, filters: $filters);
         $newTasks = [];
         foreach($tasks as $i => $task) {
             $newTasks[] = [
                 ...$task,
-                'remaining_days' => (int) Carbon::parse(Carbon::now())->diffInDays($task['due_date'])
+                'remaining_days' => (int) Carbon::parse(Carbon::now())->diffInDays($task['due_date_real'])
             ];
         }
         return $newTasks;

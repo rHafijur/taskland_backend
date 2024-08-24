@@ -14,6 +14,7 @@ class TaskRepository implements TaskRepositoryInterface
             'title' => $task->title,
             'description' => $task->description,
             'due_date' =>  Carbon::parse($task->due_date)->timezone('Asia/Dhaka')->format("Y-m-d"),
+            'due_date_real' =>  $task->due_date,
             'project_title' => $task->project->title,
             'project_id' => $task->project->id,
             'priority' => $task->priority->title,
