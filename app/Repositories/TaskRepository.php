@@ -25,16 +25,17 @@ class TaskRepository implements TaskRepositoryInterface
         ];
     }
 
-    // public function all()
-    // {
-    //     return Task::all()->map(function ($task) {
-    //         return $this->mapper($task);
-    //     });
-    // }
-
-    public function all()
+    public function all($additionalQuery = null, array $filters = [])
     {
-        return Task::where('created_by', auth()->id())->get()->map(function ($task) {
+        $query = Task::query();
+
+        $query->when($additionalQuery != null, $additionalQuery);
+
+        foreach ($filters as $filter) {
+            $query = $filter->apply($query);
+        }
+
+        return $query->get()->map(function ($task) {
             return $this->mapper($task);
         });
     }

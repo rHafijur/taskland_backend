@@ -5,6 +5,7 @@ namespace App\Services;
 use Carbon\Carbon;
 use App\Events\TaskUpdated;
 use App\Events\TaskCompleted;
+use App\Filters\CreatedByFilter;
 use App\Repositories\TaskRepositoryInterface;
 
 class TaskService
@@ -45,6 +46,11 @@ class TaskService
     public function all()
     {
         return $this->taskRepository->all();
+    }
+
+    public function allByAuthUser()
+    {
+        return $this->taskRepository->all(filters: [new CreatedByFilter(auth()->id())]);
     }
 
     public function find($id)

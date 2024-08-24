@@ -4,7 +4,8 @@ namespace App\Repositories;
 
 interface TaskRepositoryInterface
 {
-    public function all();
+    public function all($query, array $filters);
+
 
     public function create(array $data);
 

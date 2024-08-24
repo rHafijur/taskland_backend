@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Services\TaskService;
 use App\Services\UserService;
 use App\Services\ProjectService;
+use App\Services\DashboardService;
 use App\Repositories\TaskRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\ProjectRepository;
@@ -34,6 +35,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ProjectRepositoryInterface::class, ProjectRepository::class);
         $this->app->bind(ProjectService::class, function ($app) {
             return new ProjectService($app->make(ProjectRepositoryInterface::class));
+        });
+
+        $this->app->bind(DashboardService::class, function ($app) {
+            return new DashboardService($app->make(TaskRepositoryInterface::class));
         });
     }
 

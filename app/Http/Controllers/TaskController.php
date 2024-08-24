@@ -21,7 +21,7 @@ class TaskController extends Controller
     public function index()
     {
         return [
-            'data' => $this->taskService->all()
+            'data' => $this->taskService->allByAuthUser()
         ];
     }
 
