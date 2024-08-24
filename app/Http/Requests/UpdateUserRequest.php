@@ -25,7 +25,7 @@ class UpdateUserRequest extends FormRequest
             'role_id' => 'required|integer|exists:roles,id',
             'name' => 'required|string|max:255',
             'email' => "required|email|unique:users,email,$this->id,id",
-            'password' => 'optional|min:8'
+            'password' => 'min:8'
         ];
     }
 }
