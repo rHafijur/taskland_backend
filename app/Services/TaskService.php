@@ -40,7 +40,12 @@ class TaskService
 
     public function delete($id)
     {
-        return $this->taskRepository->delete($id);
+        $this->taskRepository->delete($id);
+        try {
+            TaskUpdated::dispatch($id);
+        } catch(\Throwable $t) {
+        }
+        return;
     }
 
     public function all()
