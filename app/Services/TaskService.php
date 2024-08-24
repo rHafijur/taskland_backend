@@ -18,7 +18,7 @@ class TaskService
     public function create(array $data)
     {
         $data['task_status_id'] = 1;
-        $data['due_date'] = Carbon::parse($data['due_date'])->format('Y-m-d');
+        $data['due_date'] = Carbon::parse($data['due_date']);
         $task = $this->taskRepository->create($data);
         try {
             TaskUpdated::dispatch($task['id']);
@@ -29,7 +29,7 @@ class TaskService
 
     public function update(array $data, $id)
     {
-        $data['due_date'] = Carbon::parse($data['due_date'])->format('Y-m-d');
+        $data['due_date'] = Carbon::parse($data['due_date']);
         $task = $this->taskRepository->update($data, $id);
         try {
             TaskUpdated::dispatch($task['id']);

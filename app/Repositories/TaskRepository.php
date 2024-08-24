@@ -13,14 +13,14 @@ class TaskRepository implements TaskRepositoryInterface
             'id' => $task->id,
             'title' => $task->title,
             'description' => $task->description,
-            'due_date' => $task->due_date,
+            'due_date' =>  Carbon::parse($task->due_date)->timezone('Asia/Dhaka')->format("Y-m-d"),
             'project_title' => $task->project->title,
             'project_id' => $task->project->id,
             'priority' => $task->priority->title,
             'priority_id' => $task->priority->id,
             'task_status' => $task->status->title,
             'task_status_id' => $task->status->id,
-            'completed_at' => $task->completed_at,
+            'completed_at' => Carbon::parse($task->completed_at)->timezone('Asia/Dhaka'),
             'creator_name' => $task->createdBy->name
         ];
     }
